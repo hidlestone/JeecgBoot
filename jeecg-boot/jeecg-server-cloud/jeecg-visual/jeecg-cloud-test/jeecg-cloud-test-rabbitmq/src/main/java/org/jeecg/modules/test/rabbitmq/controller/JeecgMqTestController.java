@@ -80,4 +80,29 @@ public class JeecgMqTestController {
         return Result.OK("MQ发送消息成功");
     }
 
+    // --------------------------------------------------------------------------- //
+    public final static String EXCHANGE_NORMAL = "exchange.normal.video";
+    public final static String ROUTING_KEY_NORMAL = "routing.key.normal.video";
+
+    @GetMapping(value = "/testSendMessageButReject")
+    @Operation(summary = "测试消息发送拒收")
+    public void testSendMessageButReject() {
+        rabbitTemplate
+                .convertAndSend(
+                        EXCHANGE_NORMAL,
+                        ROUTING_KEY_NORMAL,
+                        "测试死信情况 1：消息被拒绝");
+    }
+
+    @GetMapping(value = "/testSendMultiMessage")
+    @Operation(summary = "测试消息发送大于队列最大容量")
+    public void testSendMultiMessage() {
+        for (int i = 0; i < 20; i++) {
+            rabbitTemplate.convertAndSend(
+                    EXCHANGE_NORMAL,
+                    ROUTING_KEY_NORMAL,
+                    "测试死信情况 2：消息数量超过队列的最大容量" + i);
+        }
+    }
+
 }
