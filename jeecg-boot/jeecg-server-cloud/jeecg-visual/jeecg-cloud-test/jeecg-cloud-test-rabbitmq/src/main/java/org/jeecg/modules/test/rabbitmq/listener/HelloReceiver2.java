@@ -14,9 +14,10 @@ import org.springframework.messaging.handler.annotation.Header;
 
 /**
  * 定义接收者（可以定义N个接受者，消息会均匀的发送到N个接收者中）
- *
+ * <p>
  * RabbitMq接受者2
  * （@RabbitListener声明类上，一个类只能监听一个队列）
+ *
  * @author: zyf
  * @date: 2022/04/21
  */
