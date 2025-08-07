@@ -3,6 +3,7 @@ package org.jeecg.modules.test.rabbitmq.listener;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +37,28 @@ public class DeadLetterListener {
         // 监听死信队列
         log.info("★[dead letter] dataString =" + dataString);
         log.info("★[dead letter] 我是死信监听方法，我接收到了死信消息");
+
+        // 获取消息属性
+        MessageProperties properties = message.getMessageProperties();
+
+        // 获取死信原因
+        String deadLetterReason = properties.getHeader("x-dead-letter-reason");
+
+        // 获取原始队列名称
+        String originalQueue = properties.getHeader("x-first-death-queue");
+
+        // 获取原始交换机
+        String originalExchange = properties.getHeader("x-first-death-exchange");
+
+        // 获取原始路由键
+        String originalRoutingKey = properties.getHeader("x-first-death-reason");
+
+        log.info("★[dead letter] 消息内容: {}", dataString);
+        log.info("★[dead letter] 死信原因: {}", deadLetterReason);
+        log.info("★[dead letter] 原始队列: {}", originalQueue);
+        log.info("★[dead letter] 原始交换机: {}", originalExchange);
+        log.info("★[dead letter] 原始路由键: {}", originalRoutingKey);
+
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 
