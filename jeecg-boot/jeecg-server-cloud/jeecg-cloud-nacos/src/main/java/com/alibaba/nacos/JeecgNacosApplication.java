@@ -11,17 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Nacos 启动类
- *
- * @author zyf
  */
 @SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
 @ServletComponentScan
 @EnableScheduling
 public class JeecgNacosApplication {
 
-    /** 是否单机模式启动 */
+    /**
+     * 是否单机模式启动
+     */
     private static String standalone = "true";
-    /** 是否开启鉴权 */
+    /**
+     * 是否开启鉴权
+     */
     private static String enabled = "false";
 
     public static void main(String[] args) {
@@ -30,9 +32,9 @@ public class JeecgNacosApplication {
 //        //一旦Nacos初始化，用户名nacos将不能被修改，但你可以通过控制台或API来修改密码  https://nacos.io/en/blog/faq/nacos-user-question-history8420       
 //        System.setProperty("nacos.core.auth.default.username", "nacos");
 //        System.setProperty("nacos.core.auth.default.password", "nacos");
-        System.setProperty("server.tomcat.basedir","logs");
+        System.setProperty("server.tomcat.basedir", "logs");
         //自定义启动端口号
-        System.setProperty("server.port","8848");
+        System.setProperty("server.port", "8848");
         SpringApplication.run(JeecgNacosApplication.class, args);
     }
 
