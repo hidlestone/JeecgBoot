@@ -31,7 +31,6 @@ public class JeecgMqTestController {
     @Autowired
     private RabbitMqClient rabbitMqClient;
 
-
     /**
      * 测试方法：快速点击发送MQ消息
      * 观察三个接受者如何分配处理消息：HelloReceiver1、HelloReceiver2、HelloReceiver3，会均衡分配
@@ -102,6 +101,18 @@ public class JeecgMqTestController {
                     ROUTING_KEY_NORMAL,
                     "测试死信情况 2：消息数量超过队列的最大容量" + i);
         }
+    }
+
+    // --------------------------------------------------------------------------- //
+    @GetMapping(value = "/testSendMessageButReject2")
+    @Operation(summary = "测试消息发送拒收-队列自动创建")
+    public void testSendMessageButReject2() {
+        rabbitMqClient.sendMessage("original-queue", "original-queue");
+        rabbitTemplate
+                .convertAndSend(
+                        "original-exchange",
+                        "original-routing-key",
+                        "测试死信情况 2：消息被拒绝");
     }
 
 }

@@ -2,9 +2,10 @@ package org.jeecg.modules.test.rabbitmq.listener;
 
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -25,11 +26,17 @@ public class DeadLetterListener {
     /**
      * 监听正常队列
      */
-    @RabbitListener(queues = {QUEUE_NORMAL})
+    /*@RabbitListener(queues = {QUEUE_NORMAL})
     public void processMessageNormal(Message message, Channel channel) throws IOException {
         // 监听正常队列，但是拒绝消息
         log.info("★[normal] 消息接收到，但我拒绝。");
         channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
+    }*/
+    @RabbitListener(queues = {QUEUE_NORMAL})
+    public void processMessageNormal(Message message, Channel channel) throws IOException {
+        // 监听正常队列
+        log.info("★[normal] 消息接收到。");
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 
     /**
@@ -37,9 +44,12 @@ public class DeadLetterListener {
      */
     @RabbitListener(queues = {QUEUE_DEAD_LETTER})
     public void processMessageDead(String dataString, Message message, Channel channel) throws IOException {
+        log.info("★------------------------------------------------★");
+        log.info("★[dead letter] dataString =" + dataString);
+        log.info("★[dead letter] 我是死信监听方法，我接收到了死信消息");
+
         // 获取消息属性
         MessageProperties properties = message.getMessageProperties();
-
         // 获取原队列名称
         String originalQueue = properties.getHeaders().get("x-first-death-queue").toString();
         log.info("原队列名称: " + originalQueue);
@@ -84,9 +94,35 @@ public class DeadLetterListener {
             log.info("路由键: " + firstDeath.get("routing-keys"));
         }
 
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+    }
+
+    /**
+     * 原队列监听器
+     * 处理正常业务消息，失败时消息会变成死信
+     */
+    @RabbitListener(queues = {"original-queue"})
+    public void handleOriginalMessage(String dataString, Message message, Channel channel) throws IOException {
+        // 死信队列会自动创建
+        log.info("★[normal] 消息接收到，但我拒绝。");
+        channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
+    }
+
+    /**
+     * 死信队列监听器
+     * 处理从原队列发送过来的死信消息
+     */
+    @RabbitListener(
+            bindings = @QueueBinding(
+                    value = @Queue(value = "dlq-queue", durable = "true"), // 死信队列
+                    exchange = @Exchange(value = "dlx-exchange", type = ExchangeTypes.DIRECT, durable = "true"),
+                    key = "dlx-routing-key"
+            )
+    )
+    public void handleDeadLetterMessage(String dataString, Message message, Channel channel) throws IOException {
+        log.info("★------------------------------------------------★");
         log.info("★[dead letter] dataString =" + dataString);
         log.info("★[dead letter] 我是死信监听方法，我接收到了死信消息");
-
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 
