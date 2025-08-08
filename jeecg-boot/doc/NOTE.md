@@ -66,5 +66,6 @@ Skywalking 执行参数：
 ## RabbitMQ
 `http://localhost:15672`
 
-
+## xxljob
+http://localhost:9080/xxl-job-admin
 
