@@ -68,10 +68,9 @@ public class JeecgMqTestController {
     public static final String ROUTING_KEY = "order";
 
     @GetMapping(value = "/testSendMessage")
-    @Operation(summary = "testSendMessage")
+    @Operation(summary = "测试发送消息")
     public Result<?> rabbitmqToExchange(HttpServletRequest req) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-
         rabbitTemplate.convertAndSend(
                 EXCHANGE_DIRECT,
                 ROUTING_KEY,
