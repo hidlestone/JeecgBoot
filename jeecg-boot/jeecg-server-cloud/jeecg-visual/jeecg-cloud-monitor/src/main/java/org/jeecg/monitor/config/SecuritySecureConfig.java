@@ -19,7 +19,6 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
         this.adminContextPath = adminServerProperties.getContextPath();
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 登录成功处理类
@@ -46,7 +45,6 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
                         "/instances",
                         "/actuator/**"
                 );
-
     }
 
 }
