@@ -4,10 +4,10 @@ package org.jeecg.modules.test.xxljob;
 
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.context.XxlJobHelper;
-import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -15,17 +15,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
-import com.xxl.job.core.context.XxlJobHelper;
 
 /**
  * xxl-job定时任务测试
+ *
  * @author: zyf
  * @date: 2022/04/21
  */
 @Component
 @Slf4j
 public class DemoJobHandler {
-
 
     /**
      * 简单任务
@@ -65,7 +64,7 @@ public class DemoJobHandler {
 
     /**
      * 3、命令行任务
-     *
+     * <p>
      * 输入参数：ipconfig /all
      */
     @XxlJob("commandJobHandler")
@@ -90,7 +89,7 @@ public class DemoJobHandler {
             process.waitFor();
             exitValue = process.exitValue();
         } catch (Exception e) {
-            log.info(e.getMessage(),e);
+            log.info(e.getMessage(), e);
         } finally {
             if (bufferedReader != null) {
                 bufferedReader.close();
@@ -107,7 +106,7 @@ public class DemoJobHandler {
 
     /**
      * 4、跨平台Http任务
-     *
+     * <p>
      * 输入参数：
      * url: https://www.baidu.com
      * method: get
@@ -115,8 +114,8 @@ public class DemoJobHandler {
      */
     @XxlJob("httpJobHandler")
     public ReturnT<String> httpJobHandler(String param) throws Exception {
-        String[] methodArray=new String[]{"GET","POST"};
-        int okState=200;
+        String[] methodArray = new String[]{"GET", "POST"};
+        int okState = 200;
         // param parse
         if (param == null || param.trim().length() == 0) {
             log.info("param[" + param + "] invalid.");
@@ -196,7 +195,7 @@ public class DemoJobHandler {
             log.info(responseMsg);
             return ReturnT.SUCCESS;
         } catch (Exception e) {
-            log.info(e.getMessage(),e);
+            log.info(e.getMessage(), e);
             return ReturnT.FAIL;
         } finally {
             try {
@@ -207,7 +206,7 @@ public class DemoJobHandler {
                     connection.disconnect();
                 }
             } catch (Exception e2) {
-                log.info(e2.getMessage(),e2);
+                log.info(e2.getMessage(), e2);
             }
         }
 
