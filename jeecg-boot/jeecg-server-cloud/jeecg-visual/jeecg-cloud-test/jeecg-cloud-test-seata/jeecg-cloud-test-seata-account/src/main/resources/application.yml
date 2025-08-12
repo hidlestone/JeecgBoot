@@ -21,7 +21,8 @@ spring:
     init:
       schema-locations: classpath:sql/schema-account.sql
 seata:
-  enable-auto-data-source-proxy: false
+  enable-auto-data-source-proxy: true
+  data-source-proxy-mode: AT
   service:
     grouplist:
       default: 127.0.0.1:8091

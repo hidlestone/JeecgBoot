@@ -1,7 +1,7 @@
 package org.jeecg.modules.test.seata.order.service.impl;
+
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
-
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.jeecg.modules.test.seata.order.feign.AccountClient;
 import org.jeecg.modules.test.seata.order.feign.ProductClient;
 import org.jeecg.modules.test.seata.order.mapper.SeataOrderMapper;
 import org.jeecg.modules.test.seata.order.service.SeataOrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +40,7 @@ public class SeataOrderServiceImpl implements SeataOrderService {
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public void placeOrder(PlaceOrderRequest request) {
-        log.info("xid:"+RootContext.getXID());
+        log.info("xid:" + RootContext.getXID());
         log.info("=============ORDER START=================");
         Long userId = request.getUserId();
         Long productId = request.getProductId();
@@ -64,7 +63,7 @@ public class SeataOrderServiceImpl implements SeataOrderService {
         String str = accountClient.reduceBalance(userId, amount);
         // feign响应被二次封装，判断使主事务回滚
         JSONObject jsonObject = JSONObject.parseObject(str);
-        if (jsonObject.getInteger("code") != 200) {
+        if (null != jsonObject && jsonObject.getInteger("code") != 200) {
             throw new RuntimeException();
         }
 
