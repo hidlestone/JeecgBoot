@@ -25,5 +25,6 @@
         <module>jeecg-cloud-test-rabbitmq</module>
         <module>jeecg-cloud-test-seata</module>
         <module>jeecg-cloud-test-rocketmq</module>
+        <module>jeecg-cloud-test-kafka</module>
     </modules>
 </project>
