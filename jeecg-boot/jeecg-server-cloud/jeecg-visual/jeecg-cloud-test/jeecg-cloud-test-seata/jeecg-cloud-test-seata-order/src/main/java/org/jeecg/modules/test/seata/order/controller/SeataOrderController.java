@@ -6,9 +6,10 @@ package org.jeecg.modules.test.seata.order.controller;
  * @date: 2022/01/24
  * @version: V1.0
  */
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.test.seata.order.dto.PlaceOrderRequest;
 import org.jeecg.modules.test.seata.order.service.SeataOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/test/seata/order")
 @Tag(name = "seata测试")

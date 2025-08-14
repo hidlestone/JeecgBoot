@@ -27,5 +27,7 @@ public class SeataAccount {
      */
     private BigDecimal balance;
 
+    private BigDecimal frozenBalance;
+
     private Date lastUpdateTime;
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 /**
  * @Description: 产品
  * @author: zyf
@@ -29,6 +30,8 @@ public class SeataProduct {
      * 库存
      */
     private Integer stock;
+
+    private Integer frozenStock;
 
     private Date lastUpdateTime;
 }

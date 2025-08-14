@@ -5,6 +5,8 @@ import io.seata.rm.tcc.api.BusinessActionContextParameter;
 import io.seata.rm.tcc.api.LocalTCC;
 import io.seata.rm.tcc.api.TwoPhaseBusinessAction;
 
+import java.math.BigDecimal;
+
 @LocalTCC
 public interface TccProductService {
 
@@ -17,9 +19,9 @@ public interface TccProductService {
      * @return 是/否
      */
     @TwoPhaseBusinessAction(name = "decreaseStorageTcc", commitMethod = "decreaseStorageCommit", rollbackMethod = "decreaseStorageCancel")
-    Boolean decreaseStoragePrepare(BusinessActionContext actionContext,
-                                   @BusinessActionContextParameter(paramName = "productId") Long productId,
-                                   @BusinessActionContextParameter(paramName = "count") Integer count);
+    BigDecimal decreaseStoragePrepare(BusinessActionContext actionContext,
+                                      @BusinessActionContextParameter(paramName = "productId") Long productId,
+                                      @BusinessActionContextParameter(paramName = "count") Integer count) throws Exception;
 
     /**
      * 扣减库存提交

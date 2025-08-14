@@ -12,6 +12,7 @@ import org.jeecg.modules.test.seata.order.feign.AccountClient;
 import org.jeecg.modules.test.seata.order.feign.ProductClient;
 import org.jeecg.modules.test.seata.order.mapper.SeataOrderMapper;
 import org.jeecg.modules.test.seata.order.service.SeataOrderService;
+import org.jeecg.modules.test.seata.tcc.service.TccOrderService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,5 +73,39 @@ public class SeataOrderServiceImpl implements SeataOrderService {
         orderMapper.updateById(order);
         log.info("订单已成功下单");
         log.info("=============ORDER END=================");
+    }
+
+    @Resource
+    private TccOrderService tccOrderService;
+
+    @Override
+    @GlobalTransactional
+    public Boolean handleBusiness(PlaceOrderRequest request) {
+        log.info("=============ORDER START=================");
+        String orderNo = request.getOrderNo();
+        Long userId = request.getUserId();
+        Long productId = request.getProductId();
+        Integer count = request.getCount();
+        log.info("收到下单请求,用户:{},订单号:{},商品:{},数量:{}", userId, orderNo, productId, count);
+
+        SeataOrder order = SeataOrder.builder()
+                .orderNo(orderNo)
+                .userId(userId)
+                .productId(productId)
+                .status(OrderStatus.INIT)
+                .count(count)
+                .build();
+
+        tccOrderService.createOrderPrepare(null, request);
+
+        log.info("订单一阶段生成，等待扣库存付款中");
+        // 扣减库存并计算总价
+        BigDecimal amount = productClient.reduceStockTcc(productId, count);
+        // 扣减余额
+        String str = accountClient.reduceBalanceTcc(userId, amount);
+
+        int a = 1 / 0;
+
+        return true;
     }
 }

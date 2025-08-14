@@ -23,6 +23,8 @@ public class SeataOrder {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    private String orderNo;
+
     /**
      * 用户ID
      */

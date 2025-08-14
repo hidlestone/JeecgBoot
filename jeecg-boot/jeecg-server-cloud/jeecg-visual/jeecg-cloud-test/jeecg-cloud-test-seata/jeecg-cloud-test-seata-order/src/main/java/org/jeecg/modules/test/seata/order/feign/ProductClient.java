@@ -22,4 +22,8 @@ public interface ProductClient {
      */
     @PostMapping("/test/seata/product/reduceStock")
     BigDecimal reduceStock(@RequestParam("productId") Long productId, @RequestParam("count") Integer count);
+
+    @PostMapping("/test/seata/product/reduceStockTcc")
+    BigDecimal reduceStockTcc(@RequestParam("productId") Long productId, @RequestParam("count") Integer count);
+
 }

@@ -1,7 +1,7 @@
 package org.jeecg.modules.test.seata.account.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.test.seata.account.service.SeataAccountService;
+import org.jeecg.modules.test.seata.tcc.service.TccAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +18,16 @@ public class SeataAccountController {
 
     @Autowired
     private SeataAccountService accountService;
+    @Autowired
+    private TccAccountService tccAccountService;
 
     @PostMapping("/reduceBalance")
     public void reduceBalance(Long userId, BigDecimal amount) {
         accountService.reduceBalance(userId, amount);
+    }
+
+    @PostMapping("/reduceBalanceTcc")
+    public void reduceBalanceTcc(Long userId, BigDecimal amount) throws Exception {
+        tccAccountService.decreaseAccountPrepare(null, userId, amount);
     }
 }
