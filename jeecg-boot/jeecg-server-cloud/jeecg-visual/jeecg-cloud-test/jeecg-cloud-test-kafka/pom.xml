@@ -12,21 +12,10 @@
     <artifactId>jeecg-cloud-test-kafka</artifactId>
 
     <dependencies>
-        <!-- Spring Boot Web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <!-- Spring for Apache Kafka -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-        </dependency>
-        <!-- 可选：Lombok 用于简化样板代码 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 
