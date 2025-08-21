@@ -66,6 +66,8 @@ JeecgBoot低代码平台，可以应用在任何J2EE项目的开发中，支持�
 启动项目
 -----------------------------------
 
+> 默认账号密码： admin/123456
+
 - [开发环境搭建](https://help.jeecg.com/java/setup/tools)
 - [IDEA启动前后端(单体模式)](https://help.jeecg.com/java/setup/idea/startup)
 - [Docker一键启动(单体模式)](https://help.jeecg.com/java/docker/quick)
@@ -77,8 +79,9 @@ JeecgBoot低代码平台，可以应用在任何J2EE项目的开发中，支持�
 -----------------------------------
 
 - 官方网站：  [http://www.jeecg.com](http://www.jeecg.com)
-- 入门指南：  [快速入门](http://www.jeecg.com/doc/quickstart)  | [开发文档](https://help.jeecg.com)  | [AI应用使用手册](https://help.jeecg.com/aigc)  |  [技术博客](https://jeecg.blog.csdn.net)
-- 技术支持：  [反馈问题](https://github.com/jeecgboot/JeecgBoot/issues/new?template=bug_report.md)  | [视频教程](http://jeecg.com/doc/video)  | [低代码体验一分钟](https://jeecg.blog.csdn.net/article/details/106079007) 
+- 在线演示：  [平台演示](https://boot3.jeecg.com) | [APP演示](https://jeecg.com/appIndex)
+- 入门指南：  [快速入门](http://www.jeecg.com/doc/quickstart)  | [代码生成使用](https://help.jeecg.com/java/codegen/online) | [开发文档](https://help.jeecg.com)  | [AI应用手册](https://help.jeecg.com/aigc) | [视频教程](http://jeecg.com/doc/video)
+- 技术支持：  [反馈问题](https://github.com/jeecgboot/JeecgBoot/issues/new?template=bug_report.md)    | [低代码体验一分钟](https://jeecg.blog.csdn.net/article/details/106079007) 
 - QQ交流群 ： 964611995、⑩716488839(满)、⑨808791225(满)、其他(满)
 
 
